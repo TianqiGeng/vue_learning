@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片切换</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <img :src="imgArr[index]"></img>
+        <a href="#" @click="prev" v-show="index!=0">prev</a>
+        <a href="#" @click="next" v-show="index<imgArr.length-1">next</a>
+    </div>
+
+
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                imgArr: [
+                    "./00.jpg",
+                    "./01.jpg",
+                    "./02.jpg",
+                    "./03.jpg",
+                    "./04.jpg",
+                    "./05.jpg",
+                    "./06.jpg",
+                    "./07.jpg",
+                    "./08.jpg",
+                ],
+                index: 0
+            },
+            methods: {
+                prev: function () {
+                    this.index--;
+                },
+                next: function () {
+                    this.index++;
+                },
+
+            }
+        });
+
+    </script>
+</body>
+
+</html>

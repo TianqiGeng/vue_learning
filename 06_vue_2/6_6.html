@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for/on/model</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <hr>
+        <h1>v-for</h1>
+        <input type="button" value="Add" @click="add">
+        <input type="button" value="remove" @click="remove">
+        <ul>
+            <li v-for="(it,index) in location">
+                {{index+1}}:{{it}}
+            </li>
+        </ul>
+        <h2 v-for="item in student">
+            {{item.name}}
+        </h2>
+        <hr>
+        <h1>v-on</h1>
+        <input type="button" value="click" @click="doIt(666,'haha')">
+        <input type="text" @keyup.enter="sayHi">
+        <hr>
+        <h1>v-model</h1>
+        <input type="button" value="edit" @click="setM">
+        <input type="text" value="fish" v-model="message" @keyup.enter="getM">
+        <h2>{{message}}</h2>
+    </div>
+
+
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                location: ['ChengDu', 'DaLian', 'BeiJing', 'WuHan', 'ShangHai'],
+                student: [
+                    { name: "A" },
+                    { name: "B" }
+                ],
+                message: "aaa",
+            },
+            methods: {
+                add: function () {
+                    this.location.push('NanJing')
+                },
+                remove: function () {
+                    this.location.shift();
+                },
+                doIt: function (a, b) {
+                    alert(a + b);
+                },
+                sayHi: function () {
+                    alert("aaaaaaa");
+                },
+                getM: function () {
+                    alert(this.message);
+                },
+                setM: function () {
+                    this.message = "cat";
+                },
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-show/if/bind</title>
+
+</head>
+
+<body>
+    <div id="app">
+
+        <hr>
+        <h2>v-show</h2>
+        <input type="button" value="change" @click="changeIsShow">
+        <img v-show="isShow" src="./123.jpg" alt="cat"><br /><br />
+        <input type="button" value="addAge" @click="changeAge">
+        <img v-show="age>=18" src="./123.jpg" alt="cat"></img>
+        <hr>
+        <h2>v-if</h2>
+        <input type="button" value="change" @click="changeIsIf">
+        <p v-if="isIf">one</p>
+        <p v-show="isIf">two</p>
+        <p v-if="age2>=20">three</p>
+        <hr>
+        <h2>v-bind</h2>
+        <img v-bind:src="address" alt=""><br /><br />
+        <!-- <img :src="address" :title="title+'!!!'" :class="isActive?'active':''" @click="toggleActive"><br /> -->
+        <img :class="{active:isActive}" @click="toggleActive" src="./123.jpg" alt="cat"><br /><br />
+
+    </div>
+
+
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                isShow: false,
+                age: 33,
+                isIf: false,
+                age2: 33,
+                address: 'https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%9B%BE%E7%89%87&step_word=&hs=2&pn=2&spn=0&di=113960&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=0&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=undefined&cs=1141259048%2C554497535&os=933218164%2C348838775&simid=3512635485%2C227490761&adpicid=0&lpn=0&ln=1542&fr=&fmq=1597667789654_R&fm=&ic=undefined&s=undefined&hd=undefined&latest=undefined&copyright=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fa1.att.hudong.com%2F05%2F00%2F01300000194285122188000535877.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fp7rtwg_z%26e3Bkwthj_z%26e3Bv54AzdH3Ftrw1AzdH3Fw8_ac_aa_a8naaaaa8l9dbc8dd8bbaaacncb00_3r2_z%26e3Bip4s&gsm=3&rpstart=0&rpnum=0&islist=&querylist=&force=undefined',
+                title: 'lalala',
+                isActive: false,
+            },
+            methods: {
+                changeIsShow: function () {
+                    this.isShow = !this.isShow;
+                },
+                changeAge: function () {
+                    this.age++;
+                },
+                changeIsIf: function () {
+                    this.isIf = !this.isIf;
+                },
+                toggleActive: function () {
+                    this.isActive = !this.isActive;
+                },
+            }
+        });
+
+    </script>
+</body>
+
+</html>

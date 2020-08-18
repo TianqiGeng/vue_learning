@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-text/html/on</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="cal">
+            <button @click="sub">-</button>
+            <span>{{num}}</span>
+            <button @click="add">+</button>
+        </div>
+
+    </div>
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                num: 1
+            },
+            methods: {
+                sub: function () {
+                    if (this.num > 0) {
+                        this.num--;
+                    } else {
+                        alert("最小啦");
+                    }
+                },
+                add: function () {
+                    if (this.num < 10) {
+                        this.num++;
+                    } else {
+                        alert("最大了");
+                    }
+                },
+            }
+        });
+
+    </script>
+</body>
+
+</html>

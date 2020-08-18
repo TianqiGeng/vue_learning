@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #app {
+        width: 80%;
+        height: 100%;
+        border: 1px solid red;
+        margin: 50px 100px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .left {
+        width: 20%;
+        border: 1px solid red;
+
+    }
+
+    button {
+        width: 50px;
+        height: 20px;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .center {
+        width: 60%;
+        border: 1px solid red;
+        height: 550px;
+
+    }
+
+    .right {
+        width: 20%;
+        border: 1px solid red;
+    }
+
+    .foot {
+        border: 1px solid red;
+
+    }
+
+    .video {
+        float: left;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="head">
+            音乐播放器 搜索：<input type="text" v-model="music" @keyup.enter="searchMusic">
+        </div>
+        <div class="content">
+            <div class="left">
+                <ul>
+                    <li v-for="item in musicList">
+                        {{item.name}}
+                        <button @click="play(item.id)">play</button>
+                        <button @click="mv(item.mvid)" v-if="item.mvid!=0">mv</button>
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="center">
+                <img :src="pic" />
+                <div class="video" v-show="isShow">
+                    <video controls="controls" :src="mvSrc"></video>
+                    <button @click="close">close</button>
+                </div>
+            </div>
+            <div class="right">
+                <ul>
+                    <li v-for="comment in commentList">
+                        <h5>{{comment.commentId}}</h5>
+                        <span>{{comment.content}}</span>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer" :class="{run:isPlay}">
+            <audio ref="audio" :src="address" @play="run" @pause="pause" controls autoplay loop></audio>
+        </div>
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                music: "",
+                musicList: [],
+                address: "",
+                pic: '',
+                commentList: [],
+                isPlay: false,
+                mvSrc: '',
+                isShow: false,
+            },
+            methods: {
+                searchMusic: function () {
+                    console.log(this.music);
+                    that = this;
+                    var address = 'https://autumnfish.cn/search?keywords=' + this.music;
+                    axios.get(address).then(
+                        function (response) {
+                            console.log(response.data.result.songs);
+                            that.musicList = response.data.result.songs;
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                },
+                play: function (id) {
+                    that = this;
+                    var address = 'https://autumnfish.cn/song/url?id=' + id;
+                    var picaddress = 'https://autumnfish.cn/song/detail/url?ids=' + id;
+                    var commentaddress = 'https://autumnfish.cn/comment/hot?type=0&id=' + id;
+
+                    axios.get(address).then(
+                        function (response) {
+                            that.address = response.data.data[0].url;
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                    axios.get(picaddress).then(
+                        function (response) {
+                            that.pic = response.data.songs[0].al.picUrl;
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                    axios.get(commentaddress).then(
+                        function (response) {
+                            console.log(response);
+                            that.commentList = response.data.hotComments;
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                },
+                run: function () {
+                    this.isPlay = true;
+                },
+                pause: function () {
+                    this.isPlay = false;
+                },
+                mv: function (mvid) {
+                    that = this;
+                    var mvaddress = 'https://autumnfish.cn/mv/url?id=' + mvid;
+                    console.log(mvaddress);
+                    axios.get(mvaddress).then(
+                        function (response) {
+                            that.isShow = true;
+                            that.mvSrc = response.data.data.url
+                            console.log("mvSrc" + this.mvSrc);
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                },
+                close: function () {
+                    that.isShow = false;
+                }
+
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-text/html/on</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h2>1. v-text</h2>
+        <h3 v-text="message+'!'"></h3>
+        <h3 v-text="student.name+'!'"></h3>
+        <h3>{{message+'i'}}深圳</h3>
+        <hr>
+        <h2>2. v-html</h2>
+        <h3 v-html="message"></h3>
+        <h3 v-text="message"></h3>
+        <h3 v-html="newMessage"></h3>
+        <h3 v-text="newMessage"></h3>
+        <hr>
+        <h2>3. v-on</h2>
+        <input type="button" value="v-on指令" v-on:click="one">
+        <input type="button" value="v-on简写" @click="one">
+        <input type="button" value="双击事件" @dblclick="one">
+        <p @click="change()">{{food}}</p>
+
+
+    </div>
+    </div>
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue啦啦啦!',
+                student: {
+                    name: "xiaomin",
+                    age: 22,
+                    sex: "girl"
+                },
+                campus: ["BeiJing", "ShangHai", "NanJing"],
+                newMessage: "<a href='aaa'>vhtml</a>",
+                food: "apple",
+            },
+            methods: {
+                one: function () {
+                    alert("do it");
+                },
+                change: function () {
+                    alert(" good!");
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

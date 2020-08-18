@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h2>weather</h2>
+        <input type="text" @keyup.enter="search" v-model="searchWord">
+
+        <a href="#" value="北京" @click="getCity('北京')">北京</a>
+        <a href="#" value="上海" @click="getCity('上海')">上海</a>
+        <a href="#" value="广州" @click="getCity('广州')">广州</a>
+        <a href="#" value="深圳" @click="getCity('深圳')">深圳</a>
+        <div class="content">
+            <ul>
+                <li v-for="item in result">
+                    {{item.date}}:{{item.fengli}}:{{item.fengxiang}}:{{item.high}}:{{item.low}}:{{item.type}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                result: [],
+                searchWord: "",
+
+            },
+            methods: {
+                search: function () {
+                    console.log(this.searchWord);
+                    that = this;
+                    var address = 'https://wthrcdn.etouch.cn/weather_mini?city=' + this.searchWord;
+                    console.log(address);
+                    axios.get(address).then(
+
+                        function (response) {
+                            console.log(response.data.data.forecast);
+                            that.result = response.data.data.forecast;
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                },
+                getCity(value) {
+                    console.log(value);
+                    this.searchWord = value;
+                    this.search();
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
