@@ -13,3 +13,5 @@
     播放动画
 
     https://www.bilibili.com/video/BV12J411m7MG?p=3
+
+4. demo中带图片的没有显示出来
